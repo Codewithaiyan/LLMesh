@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: llmesh-router
+  namespace: llmesh
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: llmesh-router
+  template:
+    metadata:
+      labels:
+        app: llmesh-router
+    spec:
+      containers:
+      - name: router
+        image: llmesh-router:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8000
+        env:
+        - name: OLLAMA_PODS
+          value: "http://ollama-0.ollama.llmesh.svc.cluster.local:11434,http://ollama-1.ollama.llmesh.svc.cluster.local:11434"
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: llmesh-router
+  namespace: llmesh
+spec:
+  selector:
+    app: llmesh-router
+  ports:
+  - port: 8000
+    targetPort: 8000
+  type: NodePort
