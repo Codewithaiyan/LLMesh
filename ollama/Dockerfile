@@ -1,8 +1,8 @@
 FROM ollama/ollama:latest
 
-WORKDIR /app
-
-COPY start.sh .
+COPY ollama_models /root/.ollama/models
+COPY LLMesh/ollama/start.sh /app/start.sh
+RUN chmod +x /app/start.sh
 
 EXPOSE 11434
 

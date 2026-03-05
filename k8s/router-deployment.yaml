@@ -21,7 +21,7 @@ spec:
         - containerPort: 8000
         env:
         - name: OLLAMA_PODS
-          value: "http://ollama-0.ollama.llmesh.svc.cluster.local:11434,http://ollama-1.ollama.llmesh.svc.cluster.local:11434"
+          value: "http://ollama.llmesh.svc.cluster.local:11434"
         resources:
           requests:
             memory: "256Mi"
